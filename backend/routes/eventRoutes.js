@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { planEvent } = require("../controllers/eventController");
-const Venue         = require("../models/Venue");
-const Catering      = require("../models/Catering");
-const Entertainment = require("../models/Entertainment");
+
+const Venue         = require("../models/venue");
+const Catering      = require("../models/catering");
+const Entertainment = require("../models/entertainment");
 
 // POST /api/plan-event — generate 3 plans
 router.post("/plan-event", planEvent);
