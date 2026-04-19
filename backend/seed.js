@@ -19,7 +19,6 @@ const Venue         = mongoose.model("Venue", venueSchema);
 const Catering      = mongoose.model("Catering", cateringSchema);
 const Entertainment = mongoose.model("Entertainment", entertainmentSchema);
 
-// ── 50 VENUES ────────────────────────────────────────────────────────────────
 const venues = [
   { name: "UB Grand Ballroom",         price: 3800000, capacity: 900, style: ["luxury"],                    images: ["http://localhost:5000/uploads/venue1.jpg"] },
   { name: "Sky Event Hall",            price: 2900000, capacity: 700, style: ["luxury", "modern"],          images: ["http://localhost:5000/uploads/venue2.jpg"] },
@@ -73,7 +72,6 @@ const venues = [
   { name: "Capital Event Arena",       price: 3700000, capacity: 880, style: ["luxury", "modern"],          images: ["http://localhost:5000/uploads/venue50.jpg"] },
 ];
 
-// ── 50 CATERING ──────────────────────────────────────────────────────────────
 const caterings = [
   { name: "Royal Mongolian Feast",     price_per_person: 48000, style: ["luxury", "traditional"],  images: ["http://localhost:5000/uploads/food1.jpg"] },
   { name: "Imperial Banquet Kitchen",  price_per_person: 50000, style: ["luxury"],                 images: ["http://localhost:5000/uploads/food2.jpg"] },
@@ -127,9 +125,7 @@ const caterings = [
   { name: "Countryside Cookout",       price_per_person: 23000, style: ["traditional", "party"],   images: ["http://localhost:5000/uploads/food50.jpg"] },
 ];
 
-// ── 55 ENTERTAINMENT ─────────────────────────────────────────────────────────
 const entertainments = [
-  // DJs
   { name: "DJ Darkness",          type: "dj",          price: 2800000, style: ["luxury", "party"],          images: ["http://localhost:5000/uploads/ent1.jpg"] },
   { name: "DJ Supreme UB",        type: "dj",          price: 2200000, style: ["luxury"],                   images: ["http://localhost:5000/uploads/ent2.jpg"] },
   { name: "DJ Elektron",          type: "dj",          price: 1500000, style: ["modern", "party"],          images: ["http://localhost:5000/uploads/ent3.jpg"] },
@@ -137,8 +133,6 @@ const entertainments = [
   { name: "DJ Night Owl",         type: "dj",          price: 700000,  style: ["party"],                    images: ["http://localhost:5000/uploads/ent5.jpg"] },
   { name: "DJ Starter Pack",      type: "dj",          price: 400000,  style: ["party", "minimal"],         images: ["http://localhost:5000/uploads/ent6.jpg"] },
   { name: "DJ Budget Beats",      type: "dj",          price: 250000,  style: ["minimal", "party"],         images: ["http://localhost:5000/uploads/ent7.jpg"] },
-
-  // Singers
   { name: "Narantsetseg (Star)",  type: "singer",      price: 3000000, style: ["luxury"],                   images: ["http://localhost:5000/uploads/ent8.jpg"] },
   { name: "Enkhjargal Vocalist",  type: "singer",      price: 2000000, style: ["luxury", "traditional"],    images: ["http://localhost:5000/uploads/ent9.jpg"] },
   { name: "Pop Star Munkhjin",    type: "singer",      price: 1500000, style: ["modern", "luxury"],         images: ["http://localhost:5000/uploads/ent10.jpg"] },
@@ -147,8 +141,6 @@ const entertainments = [
   { name: "Acoustic Singer Sod",  type: "singer",      price: 350000,  style: ["minimal"],                  images: ["http://localhost:5000/uploads/ent13.jpg"] },
   { name: "Solo Vocalist Tenu",   type: "singer",      price: 250000,  style: ["minimal", "modern"],        images: ["http://localhost:5000/uploads/ent14.jpg"] },
   { name: "Budget Singer UB",     type: "singer",      price: 200000,  style: ["minimal"],                  images: ["http://localhost:5000/uploads/ent15.jpg"] },
-
-  // Bands
   { name: "Grand Orchestra MN",   type: "band",        price: 2800000, style: ["luxury"],                   images: ["http://localhost:5000/uploads/ent16.jpg"] },
   { name: "Mongol Rock Band",     type: "band",        price: 2000000, style: ["modern", "party"],          images: ["http://localhost:5000/uploads/ent17.jpg"] },
   { name: "Nomad Jazz Quartet",   type: "band",        price: 1600000, style: ["luxury", "modern"],         images: ["http://localhost:5000/uploads/ent18.jpg"] },
@@ -158,16 +150,12 @@ const entertainments = [
   { name: "Acoustic Folk Duo",    type: "band",        price: 400000,  style: ["minimal", "traditional"],   images: ["http://localhost:5000/uploads/ent22.jpg"] },
   { name: "Small Jazz Trio",      type: "band",        price: 550000,  style: ["modern", "minimal"],        images: ["http://localhost:5000/uploads/ent23.jpg"] },
   { name: "Budget Cover Band",    type: "band",        price: 300000,  style: ["party", "minimal"],         images: ["http://localhost:5000/uploads/ent24.jpg"] },
-
-  // Hosts / MC
   { name: "Celebrity Host Bold",  type: "host",        price: 2500000, style: ["luxury"],                   images: ["http://localhost:5000/uploads/ent25.jpg"] },
   { name: "MC Arslan Pro",        type: "host",        price: 1500000, style: ["luxury", "modern"],         images: ["http://localhost:5000/uploads/ent26.jpg"] },
   { name: "Event Host Unur",      type: "host",        price: 1000000, style: ["modern"],                   images: ["http://localhost:5000/uploads/ent27.jpg"] },
   { name: "Corporate MC Gantulga",type: "host",        price: 700000,  style: ["modern", "minimal"],        images: ["http://localhost:5000/uploads/ent28.jpg"] },
   { name: "Party MC Bataa",       type: "host",        price: 450000,  style: ["party", "modern"],          images: ["http://localhost:5000/uploads/ent29.jpg"] },
   { name: "Budget MC UB",         type: "host",        price: 250000,  style: ["minimal", "party"],         images: ["http://localhost:5000/uploads/ent30.jpg"] },
-
-  // Instrumental
   { name: "Classical Ensemble MN",type: "instrumental",price: 2200000, style: ["luxury"],                   images: ["http://localhost:5000/uploads/ent31.jpg"] },
   { name: "String Quartet UB",    type: "instrumental",price: 1800000, style: ["luxury", "modern"],         images: ["http://localhost:5000/uploads/ent32.jpg"] },
   { name: "Piano & Violin Duo",   type: "instrumental",price: 1200000, style: ["luxury", "minimal"],        images: ["http://localhost:5000/uploads/ent33.jpg"] },
@@ -175,32 +163,22 @@ const entertainments = [
   { name: "Jazz Piano Trio",      type: "instrumental",price: 700000,  style: ["modern", "luxury"],         images: ["http://localhost:5000/uploads/ent35.jpg"] },
   { name: "Guitar Acoustic Solo", type: "instrumental",price: 350000,  style: ["minimal", "modern"],        images: ["http://localhost:5000/uploads/ent36.jpg"] },
   { name: "Background Music Band",type: "instrumental",price: 200000,  style: ["minimal"],                  images: ["http://localhost:5000/uploads/ent37.jpg"] },
-
-  // Traditional performers
-  { name: "Mongolian Contortion",  type: "traditional", price: 1500000, style: ["traditional", "luxury"],   images: ["http://localhost:5000/uploads/ent38.jpg"] },
+  { name: "Mongolian Contortion", type: "traditional", price: 1500000, style: ["traditional", "luxury"],    images: ["http://localhost:5000/uploads/ent38.jpg"] },
   { name: "Tsam Dance Troupe",    type: "traditional", price: 1200000, style: ["traditional"],              images: ["http://localhost:5000/uploads/ent39.jpg"] },
   { name: "Urtiin Duu Singers",   type: "traditional", price: 900000,  style: ["traditional"],              images: ["http://localhost:5000/uploads/ent40.jpg"] },
   { name: "Mongolian Throat Sing",type: "traditional", price: 600000,  style: ["traditional", "minimal"],   images: ["http://localhost:5000/uploads/ent41.jpg"] },
   { name: "Naadam Performers",    type: "traditional", price: 800000,  style: ["traditional", "party"],     images: ["http://localhost:5000/uploads/ent42.jpg"] },
   { name: "Heritage Dance Group", type: "traditional", price: 450000,  style: ["traditional"],              images: ["http://localhost:5000/uploads/ent43.jpg"] },
-
-  // Dance
   { name: "Elite Dance Company",  type: "dance",       price: 2000000, style: ["luxury", "modern"],         images: ["http://localhost:5000/uploads/ent44.jpg"] },
   { name: "Modern Dance Crew UB", type: "dance",       price: 1200000, style: ["modern", "party"],          images: ["http://localhost:5000/uploads/ent45.jpg"] },
   { name: "Hip Hop Dance Crew",   type: "dance",       price: 800000,  style: ["party", "modern"],          images: ["http://localhost:5000/uploads/ent46.jpg"] },
   { name: "Ballroom Dance Duo",   type: "dance",       price: 600000,  style: ["luxury", "traditional"],    images: ["http://localhost:5000/uploads/ent47.jpg"] },
   { name: "Street Dance Team",    type: "dance",       price: 400000,  style: ["party"],                    images: ["http://localhost:5000/uploads/ent48.jpg"] },
-
-  // Comedians
   { name: "Stand-up Comedian Dav",type: "comedian",    price: 1500000, style: ["party", "modern"],          images: ["http://localhost:5000/uploads/ent49.jpg"] },
   { name: "Comedy MC Naran",      type: "comedian",    price: 900000,  style: ["party"],                    images: ["http://localhost:5000/uploads/ent50.jpg"] },
   { name: "Budget Comedian UB",   type: "comedian",    price: 400000,  style: ["party", "minimal"],         images: ["http://localhost:5000/uploads/ent51.jpg"] },
-
-  // Magician
   { name: "Magic Show Ganaa",     type: "magician",    price: 700000,  style: ["party", "luxury"],          images: ["http://localhost:5000/uploads/ent52.jpg"] },
   { name: "Kids Magic & Fun",     type: "magician",    price: 350000,  style: ["party", "minimal"],         images: ["http://localhost:5000/uploads/ent53.jpg"] },
-
-  // Photo/Video
   { name: "Luxury Photo Booth",   type: "photobooth",  price: 500000,  style: ["luxury", "modern"],         images: ["http://localhost:5000/uploads/ent54.jpg"] },
   { name: "360 Video Booth UB",   type: "photobooth",  price: 650000,  style: ["modern", "party"],          images: ["http://localhost:5000/uploads/ent55.jpg"] },
 ];
@@ -208,7 +186,11 @@ const entertainments = [
 // ── Run ───────────────────────────────────────────────────────────────────────
 const seed = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    // ← family: 4 нэмсэн — DNS асуудал шийдэгддэг
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 10000,
+      family: 4,
+    });
     console.log("✅ Connected to MongoDB");
 
     await Promise.all([
@@ -227,7 +209,8 @@ const seed = async () => {
     console.log(`\n🏛️  Venues inserted:        ${v.length}`);
     console.log(`🍽️  Caterings inserted:      ${c.length}`);
     console.log(`🎵  Entertainment inserted:  ${e.length}`);
-    console.log(`\n🔥 ZEBE DATABASE FULLY SEEDED — ${v.length + c.length + e.length} total records\n`);
+    console.log(`\n🔥 ZEBE DATABASE FULLY SEEDED — ${v.length + c.length + e.length} total records\n`)
+    console.log(process.env.MONGO_URI);
 
     await mongoose.connection.close();
     process.exit(0);

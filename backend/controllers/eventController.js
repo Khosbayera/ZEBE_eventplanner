@@ -1,6 +1,6 @@
-const Venue = require("../models/Venue");
-const Catering = require("../models/Catering");
-const Entertainment = require("../models/Entertainment");
+const Venue = require("../models/venue");
+const Catering = require("../models/catering");
+const Entertainment = require("../models/entertainment");
 const {
   selectBestVenue,
   selectBestCatering,
@@ -90,9 +90,6 @@ const buildPlan = async ({
 
   const allowedEntertainmentTypes = ENTERTAINMENT_BY_EVENT[eventType];
 
-  // budget   → cheapest style-matching option
-  // balanced → closest to the allocated amount
-  // premium  → most expensive style-matching option
   const venue = selectBestVenue(venues, venueBudget, style, strategy);
   const catering = selectBestCatering(caterings, cateringBudget, guests, style, strategy);
   const entertainment = selectBestEntertainment(
