@@ -1,54 +1,57 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const path = require("path");
+
 const eventRoutes = require("./routes/eventRoutes");
 const errorHandler = require("./middleware/errorHandler");
 
-// Load environment variables from .env file
+// Load env
 dotenv.config();
 
 const app = express();
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
+// ─── MIDDLEWARE ─────────────────────────────────────────────
 
-// Parse incoming JSON request bodies
 app.use(express.json());
 
-// ─── Routes ───────────────────────────────────────────────────────────────────
+// ─── API ROUTES (ЭХЛЭЭД) ───────────────────────────────────
 
 app.use("/api", eventRoutes);
 
-// Health check route — useful for testing if the server is running
-app.get("/", (req, res) => {
-  res.json({ success: true, message: "ZEBE Event Planner API is running 🎉" });
+// ─── HEALTH CHECK ──────────────────────────────────────────
+
+app.get("/api/health", (req, res) => {
+  res.json({ success: true, message: "ZEBE API running 🔥" });
 });
 
-// Handle requests to undefined routes
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found." });
+// ─── FRONTEND SERVE (🔥 ЧУХАЛ) ─────────────────────────────
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ─── Global Error Handler ─────────────────────────────────────────────────────
+// ─── ERROR HANDLER ─────────────────────────────────────────
 
-// Must be registered AFTER all routes
 app.use(errorHandler);
 
-// ─── Database + Server ────────────────────────────────────────────────────────
+// ─── DB + SERVER ───────────────────────────────────────────
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
 
 const startServer = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("✅ Connected to MongoDB");
 
     app.listen(PORT, () => {
-      console.log(`🚀 ZEBE server is running on http://localhost:${PORT}`);
+      console.log(`🚀 Server running on port ${PORT}`);
     });
   } catch (err) {
-    console.error("❌ Failed to connect to MongoDB:", err.message);
-    process.exit(1); // Exit the process if DB connection fails
+    console.error("❌ MongoDB connection failed:", err.message);
+    process.exit(1);
   }
 };
 
