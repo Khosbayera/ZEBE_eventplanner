@@ -68,7 +68,8 @@ function AllocationSlider({ label, value, onChange, color }) {
   );
 }
 
-export default function PlannerSection() {
+// ── NEW: token + user props passed from App ───────────────────────────────────
+export default function PlannerSection({ token, user }) {
   const [form, setForm] = useState({
     eventType: "birthday",
     budget: "",
@@ -77,8 +78,13 @@ export default function PlannerSection() {
   });
   const [allocation, setAllocation] = useState(DEFAULT_ALLOCATION);
   const [plans, setPlans] = useState(null);
+  const [eventSummary, setEventSummary] = useState(null);  // ← NEW: store summary for saving
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // ── NEW: save plan state ─────────────────────────────────────────────────────
+  const [saving, setSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState(""); // "" | "saved" | "error"
 
   const total = allocation.venue + allocation.catering + allocation.entertainment;
   const isValid = total === 100 && form.budget && form.guests;
@@ -96,6 +102,7 @@ export default function PlannerSection() {
     setLoading(true);
     setError("");
     setPlans(null);
+    setSaveStatus("");  // ← reset save status when re-generating
 
     try {
       const { data } = await axios.post("/api/plan-event", {
@@ -108,6 +115,7 @@ export default function PlannerSection() {
 
       if (data.success) {
         setPlans(data.plans);
+        setEventSummary(data.event_summary);  // ← NEW
       } else {
         setError(data.message || "Something went wrong.");
       }
@@ -118,6 +126,26 @@ export default function PlannerSection() {
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+  // ── NEW: save handler ────────────────────────────────────────────────────────
+  const handleSavePlan = async () => {
+    if (!plans || !token) return;
+    setSaving(true);
+    setSaveStatus("");
+
+    try {
+      await axios.post(
+        "/api/plans",
+        { event_summary: eventSummary, plans },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setSaveStatus("saved");
+    } catch (err) {
+      setSaveStatus("error");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -360,6 +388,51 @@ export default function PlannerSection() {
               <PlanCard key={plan.type} plan={plan} index={i} />
             ))}
           </div>
+
+          {/* ── NEW: Save Plan button ─────────────────────────────────────────── */}
+          {token && (
+            <div className="flex flex-col items-center mt-10 gap-3">
+              <button
+                className="btn-gold"
+                style={{ fontSize: 13, minWidth: 200 }}
+                onClick={handleSavePlan}
+                disabled={saving || saveStatus === "saved"}
+              >
+                {saving
+                  ? "Saving..."
+                  : saveStatus === "saved"
+                  ? "✓ Plan Saved"
+                  : "Save This Plan"}
+              </button>
+
+              {saveStatus === "saved" && (
+                <p
+                  className="font-outfit fade-up"
+                  style={{ fontSize: 12, color: "var(--gold)" }}
+                >
+                  Your plan has been saved to your account.
+                </p>
+              )}
+
+              {saveStatus === "error" && (
+                <p
+                  className="font-outfit fade-up"
+                  style={{ fontSize: 12, color: "#e08080" }}
+                >
+                  Could not save — please try again.
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Show sign-in nudge if user is not authenticated */}
+          {!token && (
+            <div className="text-center mt-8">
+              <p style={{ fontSize: 13, color: "var(--text-muted)" }}>
+                Sign in to save your plans to your account.
+              </p>
+            </div>
+          )}
         </div>
       )}
     </section>
