@@ -1,23 +1,47 @@
-ZEBE Event Planner 🎉
-Live Demo: https://zebe-backend.onrender.com
+## 🎉 ZEBE Event Planner
 
-Overview
-ZEBE is a full-stack event planning web app that lets users plan events by selecting venues, catering, and entertainment. It features AI-powered plan generation and an AI chat assistant that recommends real services from the database. Supports Mongolian and English.
+> **AI-powered event planning web app — built for Mongolia**
 
-Tech Stack
-Frontend: React 18, Vite, Tailwind CSS, Axios
-Backend: Node.js, Express, MongoDB (Mongoose), JWT + bcryptjs, Anthropic Claude API
-DevOps: GitHub Actions, SonarCloud, Docker, Render
+🌐 **Live Demo:** https://zebe-backend.onrender.com
 
-CI/CD Pipeline
-Every push to main automatically:
+---
 
-Runs SonarCloud code quality analysis
-Builds and pushes Docker image to Docker Hub (khosbayera/zebe-webapp)
-Triggers Render auto-deploy
+## 📌 Overview
 
+ZEBE is a **full-stack event planning application** that helps users plan events by selecting venues, catering, and entertainment. It features:
 
-Project Structure
+- 🤖 **AI-powered plan generation** — creates 3 budget-tiered event plans
+- 💬 **AI Chat Assistant** — powered by Claude, recommends real services from the database
+- 🌏 **Bilingual support** — Mongolian & English
+- 🔐 **JWT Authentication** — secure register & login
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React 18, Vite, Tailwind CSS, Axios |
+| **Backend** | Node.js, Express, MongoDB, Mongoose |
+| **Auth** | JWT, bcryptjs |
+| **AI** | Anthropic Claude API |
+| **DevOps** | GitHub Actions, SonarCloud, Docker, Render |
+
+---
+
+## 🚀 CI/CD Pipeline
+
+Every push to `main` automatically triggers:
+
+1. ✅ **SonarCloud** — code quality & security analysis
+2. 🐳 **Docker** — builds & pushes image to Docker Hub (`khosbayera/zebe-webapp`)
+3. 🌐 **Render** — auto-deploys the latest version
+
+---
+
+## 📁 Project Structure
+
+```
 ZEBE_eventplanner/
 ├── .github/
 │   └── workflows/
@@ -26,7 +50,7 @@ ZEBE_eventplanner/
 ├── sonar-project.properties   # SonarCloud config
 ├── frontend/
 │   ├── src/
-│   │   ├── components/        # Header, PlannerSection, AIChatSection, etc.
+│   │   ├── components/        # Header, PlannerSection, AIChatSection...
 │   │   ├── data/              # mockData.js
 │   │   └── App.jsx
 │   └── vite.config.js
@@ -35,57 +59,99 @@ ZEBE_eventplanner/
     ├── middleware/            # authMiddleware, errorHandler
     ├── models/                # User, Venue, Catering, Entertainment, SavedPlan
     ├── routes/                # auth, event, plan, chat
-    ├── public/                # Built frontend (auto-generated)
-    ├── seed.js
-    └── server.js
+    ├── public/                # Built frontend (auto-generated, do not edit)
+    ├── seed.js                # Database seeder
+    └── server.js              # Entry point
+```
 
-API Endpoints
-MethodEndpointDescriptionAuthPOST/api/auth/registerRegister userNoPOST/api/auth/loginLogin, returns JWTNoPOST/api/plan-eventGenerate 3 event plansYesGET/api/venuesList venuesNoGET/api/cateringList catering optionsNoGET/api/entertainmentList entertainmentNoGET/api/plansGet saved plansYesPOST/api/plansSave a planYesDELETE/api/plans/:idDelete a planYesPOST/api/chatAI chat assistantYesGET/api/healthHealth checkNo
+---
 
-Environment Variables
-Create a .env in backend/:
+## 📡 API Endpoints
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `POST` | `/api/auth/register` | Register user | ❌ |
+| `POST` | `/api/auth/login` | Login, returns JWT | ❌ |
+| `POST` | `/api/plan-event` | Generate 3 event plans | ✅ |
+| `GET` | `/api/venues` | List all venues | ❌ |
+| `GET` | `/api/catering` | List catering options | ❌ |
+| `GET` | `/api/entertainment` | List entertainment | ❌ |
+| `GET` | `/api/plans` | Get saved plans | ✅ |
+| `POST` | `/api/plans` | Save a plan | ✅ |
+| `DELETE` | `/api/plans/:id` | Delete a plan | ✅ |
+| `POST` | `/api/chat` | AI chat assistant | ✅ |
+| `GET` | `/api/health` | Health check | ❌ |
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file inside `backend/`:
+
+```env
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 JWT_EXPIRES_IN=7d
 ANTHROPIC_API_KEY=your_anthropic_api_key
 PORT=5001
+```
 
-Local Development
-bash# Install
+---
+
+## 💻 Local Development
+
+```bash
+# 1️⃣ Install dependencies
 cd backend && npm install
 cd ../frontend && npm install
 
-# Seed database
+# 2️⃣ Seed the database
 cd backend && node seed.js
 
-# Run backend (port 5001)
+# 3️⃣ Run backend (port 5001)
 cd backend && npm run dev
 
-# Run frontend (port 3000)
+# 4️⃣ Run frontend (port 3000)
 cd frontend && npm run dev
+```
 
-Deploying to Render
-Root Directory: (blank)
-Build Command:
-bashcd frontend && npm install && npm run build && cd ../backend && npm install
-Start Command:
-bashnode backend/server.js
-Add all .env variables in Render's Environment settings.
+---
 
-Features
+## ☁️ Deploying to Render
 
-JWT-based auth (register/login)
-AI plan generator — 3 budget-tiered event plans
-Service explorer — browse venues, catering, entertainment
-AI chat assistant powered by Claude (recommends real DB services)
-Save, view, and delete event plans
-Bilingual UI (Mongolian + English) with Mongolian ornament design
-Full CI/CD pipeline with SonarCloud + Docker + Render
+| Setting | Value |
+|---|---|
+| **Root Directory** | *(leave blank)* |
+| **Build Command** | `cd frontend && npm install && npm run build && cd ../backend && npm install` |
+| **Start Command** | `node backend/server.js` |
 
+> ⚠️ Add all `.env` variables in Render's **Environment** settings tab.
 
-Common Issues
-Frontend changes not showing on Render:
-bashcd frontend && npm run build
-git add . && git commit -m "rebuild" && git push
-MongoDB not connecting — check MONGO_URI in Render env vars and allow all IPs (0.0.0.0/0) in Atlas.
-AI chat not working — check ANTHROPIC_API_KEY is set in Render env vars.
+---
+
+## ⚠️ Common Issues
+
+**🔴 Frontend changes not showing on Render:**
+```bash
+cd frontend
+npm run build
+git add .
+git commit -m "rebuild frontend"
+git push
+```
+
+**🔴 MongoDB not connecting** — Check `MONGO_URI` in Render env vars. Allow all IPs `0.0.0.0/0` in MongoDB Atlas.
+
+**🔴 AI chat not working** — Check `ANTHROPIC_API_KEY` is correctly set in Render env vars.
+
+---
+
+## ✨ Features
+
+- 🔐 JWT-based authentication (register & login)
+- 🤖 AI plan generator — 3 budget-tiered event plans
+- 🏛️ Service explorer — browse venues, catering & entertainment
+- 💬 AI chat assistant powered by Claude
+- 💾 Save, view & delete your event plans
+- 🎨 Mongolian ornament UI design with bilingual support
+- 🔄 Full CI/CD pipeline — SonarCloud + Docker + Render
